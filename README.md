@@ -7,13 +7,13 @@
 **原作者：** ギア · [@giaaibusi](https://x.com/giaaibusi)
 **中文版参考实现：** [GodAI-Master/ai-costume-gallery-zh](https://github.com/GodAI-Master/ai-costume-gallery-zh)
 
-![分类「春」的服装示例](assets/img/SPR-0001.webp)
+![分类「春」的服装示例](docs/preview/spring.jpg)
 
 <details><summary>再看几张（夏 / 秋 / 冬）</summary>
 
-![示例 SUM](assets/img/SUM-0001.webp)
-![示例 AUT](assets/img/AUT-0001.webp)
-![示例 WIN](assets/img/WIN-0001.webp)
+![示例 夏](docs/preview/summer.jpg)
+![示例 秋](docs/preview/autumn.jpg)
+![示例 冬](docs/preview/winter.jpg)
 
 </details>
 
@@ -86,6 +86,7 @@
 ├── assets/
 │   ├── img/            # 展示图 1366×2048 WebP，1407 张，约 116 MB
 │   └── thumbs/         # 缩略图 360×540 WebP，1407 张，约 13 MB
+├── docs/preview/       # README 里的预览图（JPEG；WebP 在 GitHub 上不渲染）
 ├── NOTICE-IMAGES.md    # 图片权利与来源说明（图片不随代码以 MIT 授权）
 ├── LICENSE             # 代码：MIT
 └── README.md
