@@ -1,5 +1,7 @@
 # 服装集图库 · COSTUME-DB-01
 
+> 仓库名：`AI-Clothing-Resource-Library`
+
 一个纯静态的**服装参考图库**：1407 张不含人物的 AI 生成服装图，按季节与风格分类，支持搜索、手动上传、自定义分类、编辑与一键生成文生图提示词。
 
 ![预览](assets/img/SPR-0001.webp)
@@ -43,7 +45,7 @@
 **方式二：本地起个静态服务器（推荐）**
 
 ```bash
-cd costume-db-01
+cd AI-Clothing-Resource-Library
 python3 -m http.server 8080
 # 打开 http://localhost:8080
 ```
