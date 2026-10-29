@@ -117,6 +117,20 @@ main{max-width:1600px;margin:0 auto;padding:22px clamp(16px,4vw,48px) 60px}
 .ftog b{display:inline-block;min-width:18px;margin-left:6px;padding:0 5px;border-radius:99px;background:var(--ac);color:#111;font-size:11px}
 .ftog b:empty{display:none}
 footer{color:var(--tx3);font-size:12px;text-align:center;padding:8px 16px 44px;line-height:1.7}
+/* 免责声明 */
+.disc{max-width:980px;margin:0 auto;padding:18px 20px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));text-align:left;color:var(--tx3);font-size:12.5px;line-height:1.9}
+.disc h2{margin:0 0 8px;font-size:12px;letter-spacing:.16em;color:var(--tx2);text-transform:uppercase}
+.disc p{margin:0 0 8px}
+.disc p:last-child{margin-bottom:0}
+.disc b{color:#cfd4dc;font-weight:600}
+.disc a{color:var(--ac);text-decoration:none;border-bottom:1px dashed rgba(143,180,255,.45)}
+.disc a:hover{color:var(--ac2);border-bottom-color:var(--ac2)}
+.disc .fine{color:var(--tx3);opacity:.85}
+@media (max-width:560px){.disc{padding:14px;font-size:12px;line-height:1.8;border-radius:14px}}
+.discline{margin:8px 0 0;font-size:12px;line-height:1.7;color:var(--tx3)}
+.discline a{color:var(--ac);text-decoration:none;border-bottom:1px dashed rgba(143,180,255,.45);margin-left:2px}
+.discline a:hover{color:var(--ac2)}
 /* クレジット（オープンチャットへのボタン＋制作者チップ） */
 .cta{margin-top:18px;max-width:760px;position:relative;padding:18px 20px;border-radius:20px;
   background:linear-gradient(135deg,rgba(143,180,255,.10),rgba(201,166,255,.08) 55%,rgba(255,255,255,.02));
@@ -277,6 +291,7 @@ input::-webkit-contacts-auto-fill-button,input::-webkit-credentials-auto-fill-bu
   <div class="hero-top"><div class="eyebrow">COSTUME-DB-01 ・ 服装参考图库</div><nav class="infotabs" id="infotabs" aria-label="使用说明・注意事项"><button type="button" class="itab" id="itab0" aria-haspopup="dialog" aria-expanded="false" aria-controls="ipanel0">使用说明</button><button type="button" class="itab" id="itab1" aria-haspopup="dialog" aria-expanded="false" aria-controls="ipanel1">注意事项</button><div class="ipanel" id="ipanel0" role="dialog" aria-labelledby="ipt0" tabindex="-1" hidden><div class="ipanel-hd"><h2 id="ipt0">使用说明</h2><button type="button" class="ipclose" aria-label="关闭">×</button></div><ul><li>可导入各种 AI 工具的服装参考或图像参考功能。</li><li>可按分类筛选，搜索编号或服装关键词（支持中英文，如：牛仔、蕾丝、白色）。</li><li>点「上传服装」可手动添加自己的图片（可多选/拖拽）。每张都必须选择分类并填写关键词，否则无法保存。</li><li>上传图片的编号会按所属分类累加（如春 SPR-0261、夏 SUM-0261；自定义分类可用自己的前缀）。</li><li>上传的图片可以删除（卡片右下角 × 或放大后点删除）；内置的 1407 张初始图片不可删除。</li><li>点分类栏末尾的「＋ 分类」可新增自定义分类，在上传时逐张指定。</li><li>点「AI 设置」填好 DeepSeek API Key 后，点开任意一张图片，在右侧「AI 提示词」里点「生成」，就会为这件服装写一条英文文生图提示词，可改、可复制、会自动保存。</li><li>点「下载原图（WebP）」可查看更大尺寸的画面细节。</li><li>图片仅包含服装；面容、体型和背景请另外提供参考或指令。</li></ul></div><div class="ipanel" id="ipanel1" role="dialog" aria-labelledby="ipt1" tabindex="-1" hidden><div class="ipanel-hd"><h2 id="ipt1">注意事项</h2><button type="button" class="ipclose" aria-label="关闭">×</button></div><ul><li>图片著作权归原作者 ギア（@giaaibusi）所有，原始站点：衣装集 COSTUME-DB-01（ai-costume-gallery.pages.dev）。</li><li>原站允许免费使用（含商业作品的制作、编辑与参考），但禁止重新分发、转载或转售图片数据本身；商用请先联系原作者。</li><li>本站代码以 MIT 授权，该协议不覆盖 assets 目录中的图片；上传到本机的图片归你所有。</li><li>这些是 AI 生成的虚构服装，并非真实商品照片；全部由文生图制作，未使用真实商品图片。</li><li>发布前虽已检查与现有品牌的相似性，但不保证不侵犯第三方权利，请自行核实并判断。</li><li>素材按现状提供，不作任何担保；作者不对使用这些数据产生的问题负责。</li><li>请勿用于表现真实人物、未成年人或违反公序良俗的用途。</li></ul></div></nav></div>
   <h1><span>服装集</span> 数据库</h1>
   <p class="sub">不含人物的纯服装参考图（2:3），按春、夏、秋、冬、内衣、派对、泳装、性感分类，也可自行上传服装并新增分类。</p>
+  <p class="discline">图片版权归原作者 ギア（@giaaibusi）所有，本页仅作学习与素材存档 · 详见页脚<a href="#foot">免责声明</a></p>
 
 
 </header>
@@ -292,7 +307,13 @@ input::-webkit-contacts-auto-fill-button,input::-webkit-credentials-auto-fill-bu
 </div></div>
 <main><div class="grid" id="grid"></div><button type="button" class="btn2 morebtn" id="more" hidden>もっと見る</button></main>
 <footer id="foot">
-
+  <section class="disc" aria-label="免责声明">
+    <h2>免责声明 · Disclaimer</h2>
+    <p>本页是个人自用的 AI 服装参考图库。图片著作权归原作者 <b>ギア（@giaaibusi）</b> 所有，原始站点为「衣装集 COSTUME-DB-01」（<a href="https://ai-costume-gallery.pages.dev/" target="_blank" rel="noopener noreferrer">ai-costume-gallery.pages.dev</a>）。本页仅作学习、素材存档与前端实践，<b>不对图片主张任何权利</b>，也不构成对原作品的商业使用授权。</p>
+    <p>依原站条款：图片可免费用于创作（含商业作品的制作、编辑与参考），<b>禁止重新分发、转载或转售图片数据本身</b>；如需商用请先联系原作者。若原作者认为本页使用方式不妥，告知即删除相关内容。</p>
+    <p>全部图片为 AI 生成的虚构服装，不含人物、面部与人体，并非真实商品照片；与现有品牌的相似性已尽力排查，但不作任何保证。素材按现状提供，<b>因使用本页内容产生的一切后果由使用者自行承担</b>。请勿用于表现真实人物、未成年人或违反公序良俗的用途。</p>
+    <p class="fine">页面代码以 MIT 授权，该协议不覆盖图片；你上传的图片只保存在本机浏览器，不会上传到任何服务器。AI 提示词由你自行配置的第三方接口生成，费用与内容由你与对应服务商负责。</p>
+  </section>
 </footer>
 
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="放大查看">
