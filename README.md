@@ -7,15 +7,8 @@
 **原作者：** ギア · [@giaaibusi](https://x.com/giaaibusi)
 **中文版参考实现：** [GodAI-Master/ai-costume-gallery-zh](https://github.com/GodAI-Master/ai-costume-gallery-zh)
 
-![分类「春」的服装示例](docs/preview/spring.jpg)
-
-<details><summary>再看几张（夏 / 秋 / 冬）</summary>
-
-![示例 夏](docs/preview/summer.jpg)
-![示例 秋](docs/preview/autumn.jpg)
-![示例 冬](docs/preview/winter.jpg)
-
-</details>
+> **预览：** 打开上面的「在线演示」即可看到完整界面（1407 张图的网格、分类页签、灯箱与 AI 提示词面板）。
+> README 里不再内嵌图片——GitHub 的 Markdown 图片统一走 `raw.githubusercontent.com`，该域名在中国大陆常被阻断，会显示成空白框。
 
 ---
 
@@ -86,7 +79,6 @@
 ├── assets/
 │   ├── img/            # 展示图 1366×2048 WebP，1407 张，约 116 MB
 │   └── thumbs/         # 缩略图 360×540 WebP，1407 张，约 13 MB
-├── docs/preview/       # README 里的预览图（JPEG；WebP 在 GitHub 上不渲染）
 ├── NOTICE-IMAGES.md    # 图片权利与来源说明（图片不随代码以 MIT 授权）
 ├── LICENSE             # 代码：MIT
 └── README.md
