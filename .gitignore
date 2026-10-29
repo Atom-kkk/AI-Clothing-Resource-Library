@@ -24,3 +24,6 @@ secrets.*
 # 日志与临时文件
 *.log
 *.tmp
+
+# WorkBuddy 应用标记文件
+.wbapp_*.genie
