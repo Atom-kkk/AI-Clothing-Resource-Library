@@ -1,0 +1,26 @@
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+
+# 本地工作区与智能体记录（含个人上下文，勿提交）
+.workbuddy/
+.claude/
+.cursor/
+
+# 依赖与构建产物（本项目无构建，仅作兜底）
+node_modules/
+dist/
+
+# 本地环境与密钥（API Key 存在浏览器里，切勿写进文件）
+.env
+.env.*
+*.local
+secrets.*
+
+# 日志与临时文件
+*.log
+*.tmp
