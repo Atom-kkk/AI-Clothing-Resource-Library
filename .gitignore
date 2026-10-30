@@ -27,3 +27,9 @@ secrets.*
 
 # WorkBuddy 应用标记文件
 .wbapp_*.genie
+
+# 源站 PNG 原图（约 1.5 GB，只存本地、不提交）
+assets/png/
+
+# 拉取脚本的运行日志
+logs/

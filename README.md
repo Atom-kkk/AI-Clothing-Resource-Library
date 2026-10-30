@@ -3,6 +3,7 @@
 > 1407 张 AI 服装参考图的**纯静态**画廊：零依赖、零构建，可本地离线运行，支持手动上传、自定义分类与一键生成 AI 提示词。
 
 **在线演示：** <https://ai-clothing-library.app.workbuddy.host/?sharecode=E2QQTAQUAL>
+**PNG 原图打包：** <https://pan.quark.cn/s/3b0b414ac2d3>（1407 张 1366×2048 无损，无需提取码）
 **原始图库：** <https://ai-costume-gallery.pages.dev/>（`衣装集 COSTUME-DB-01`）
 **原作者：** ギア · [@giaaibusi](https://x.com/giaaibusi)
 **中文版参考实现：** [GodAI-Master/ai-costume-gallery-zh](https://github.com/GodAI-Master/ai-costume-gallery-zh)
@@ -78,7 +79,9 @@
 ├── index.html          # 样式 / 逻辑 / 1407 条数据全部内联（约 400 KB）
 ├── assets/
 │   ├── img/            # 展示图 1366×2048 WebP，1407 张，约 116 MB
-│   └── thumbs/         # 缩略图 360×540 WebP，1407 张，约 13 MB
+│   ├── thumbs/         # 缩略图 360×540 WebP，1407 张，约 13 MB
+│   └── png/            # 源站 PNG 原图，1366×2048 无损，约 1.3 GB —— 本地镜像，已 gitignore
+├── scripts/            # 原图拉取脚本（断点续传 + 并发 + 自动重试）
 ├── NOTICE-IMAGES.md    # 图片权利与来源说明（图片不随代码以 MIT 授权）
 ├── LICENSE             # 代码：MIT
 └── README.md
@@ -188,9 +191,58 @@ Key 无效或余额不足；重新填一份，再点「测试连接」。
 | --- | --- | --- | --- |
 | 缩略图 `assets/thumbs/` | 360×540 WebP | ✅ 1407/1407 | 约 13 MB |
 | 展示图 `assets/img/` | 1366×2048 WebP | ✅ 1407/1407 | 约 116 MB |
-| 原图 PNG（源站） | 1366×2048 PNG | ✗ 未镜像 | 每张约 1.1 MB |
+| 原图 PNG（源站） | 1366×2048 PNG | 🟡 本地镜像 / 网盘，未入 git | 约 1.3 GB（每张约 0.95 MB） |
 
-展示图与源站 PNG 同分辨率，因此仓库只保留 WebP，下载按钮给的也是这张。
+展示图与源站 PNG 同分辨率，所以仓库主体只提交 WebP，克隆快、Pages 也不会超限。
+
+**PNG 原图为什么只存本地？** 1407 张无损 PNG 合计约 1.3 GB，塞进 git 会让克隆、拉取和 GitHub Pages 都很难受，所以 `assets/png/` 走 `.gitignore`，不随仓库分发。
+
+**想拿到这批 PNG 原图，两条路：**
+
+**① 网盘直接下（最省事）** — <https://pan.quark.cn/s/3b0b414ac2d3>　1407 张 1366×2048 无损 PNG 打包，无需提取码。
+
+**② 自己跑脚本从源站拉** — 幂等、可中断续传，断网会自动退避重试：
+
+```bash
+bash scripts/fetch-all-png.sh          # 全量 1407 张，约 1.3 GB
+PAR=8 bash scripts/fetch-all-png.sh    # 手动指定并发（默认 10）
+```
+
+两种方式拿到后都放进 `assets/png/`，页面会自动探测——本地有 `assets/png/` 时下载按钮变成「下载原图（PNG 无损）」，没有则退回「下载原图（WebP）」，两种环境都不会 404。
+
+> 图片权利归原作者，网盘与脚本仅作个人备份与学习用途。
+
+**拉取脚本一览：**
+
+| 脚本 | 作用 |
+| --- | --- |
+| `scripts/fetch-all-png.sh` | 外层循环：连通性预检 + 跑到全量齐了为止，零进展指数退避 |
+| `scripts/fetch-origin-png.sh` | 单轮批量：xargs 并发调 worker，汇总 OK / SKIP / FAIL |
+| `scripts/fetch-one-png.sh` | 单张 worker：下载 + 校验 PNG 魔数，坏文件自动换 IP 重试 |
+| `scripts/png-ids.txt` | 1407 条待下载编号清单 |
+| `scripts/cf-ips.txt` | Cloudflare 边缘 IP 池，用于绕开被污染的 DNS |
+| `scripts/verify-png.py` | 全量体检：签名 + 逐块 CRC32 + IEND 结尾，`--delete-bad` 直接删掉坏图 |
+
+三个脚本都是**幂等**的：已存在且校验通过的文件直接跳过，中断后重跑不会重复下载。
+
+**校验分三层，缺一层就会漏掉截断文件**（这是真踩过的坑）：
+
+| 层 | 判据 | 为什么需要 |
+| --- | --- | --- |
+| 1 | `curl` 退出码为 0 | `curl -m` 超时会中断传输，磁盘上留下半截文件但退出码非 0；不看退出码就无从分辨 |
+| 2 | 文件末 12 字节是 `IEND` 块 | 截断的 PNG 依旧有合法文件头和合法体积，只有结尾能暴露 |
+| 3 | 体积 > 400 KB | 兜底，挡掉空响应和错误页 |
+
+`scripts/verify-png.py` 是最严的一层：逐块校验 CRC32，连 `IDAT` 数据流都验。**下载完务必跑一遍**：
+
+```bash
+python3 scripts/verify-png.py                 # 只检查并列出坏图
+python3 scripts/verify-png.py --delete-bad    # 顺手删掉坏图，再重跑 fetch-all-png.sh 补齐
+```
+
+**为什么要写死 IP？** 某些环境（容器、沙箱、被劫持的网络）会把 `*.pages.dev` 解析到 `198.18.0.0/15` 这类假地址，表现为「TCP 能连、TLS 握手直接断」，`SSL_ERROR_SYSCALL` 刷屏。源站挂在 Cloudflare 上，任意边缘 IP 都能按 SNI 正确回源，所以脚本用 `curl --resolve` 把域名钉到 `cf-ips.txt` 里的真实 IP。这些 IP 哪天失效了，换成 [Cloudflare 官方 IP 段](https://www.cloudflare.com/ips/) 里任意一个即可；把 `cf-ips.txt` 清空则回退到系统 DNS。
+
+**并发别开太大。** 实测这站（经代理出口）在 10 并发时约 750 KB/s，开到 16 并发会把出口直接打挂、全部失败。脚本默认 `PAR=10`。
 
 ## 内容提示
 
@@ -206,6 +258,7 @@ Key 无效或余额不足；重新填一份，再点「测试连接」。
 
 ## 更新记录
 
+- **2026-10** 补齐源站 1407 张 PNG 无损原图：提供网盘打包下载 + 断点续传脚本；「下载原图」按钮自动在 PNG / WebP 间切换；新增 `verify-png.py` 做逐块 CRC 与像素级校验
 - **2026-10** 素材全部本地化，移除所有外部 CDN 依赖；补全 README、许可与图片来源说明
 - **2026-10** 接入 DeepSeek 生成文生图提示词；卡片增加 `AI` 角标
 - **2026-10** 上传必须选分类与关键词；编号改为按分类累加；支持编辑与删除上传图
